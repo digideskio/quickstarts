@@ -8,11 +8,10 @@ Follow the instructions from the _Building this example_ section, and after you 
 
 1. Run `mvn camel:run` to run the example as a standalone Spring based Camel application.
 
-Running outside fabric means that you do not have the fabric web console or fabric server to manage the application. You may want to use `mvn camel:run` during development and to quickly try your code changes.
-#todo polish docs
+Running outside fabric means that you do not have the fabric web console or fabric server to manage the application.
+You may want to use `mvn camel:run` during development and to quickly try your code changes.
 
-The REST service provides a customer service that supports the following operations
-
+### todo polish docs
 Once it's running you can test with CURL or your browser
 
 Index : http://localhost:9003/index.html
