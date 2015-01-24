@@ -40,7 +40,7 @@
     <docker.port.container.http>${http.port}</docker.port.container.http>
     <fabric8.kubernetes.name>quickStartJavaCamelNettyHttp</fabric8.kubernetes.name>
     <fabric8.service.name>quickstart-java-camel-netty-http</fabric8.service.name>
-    <fabric8.service.port>9003</fabric8.service.port>
+    <fabric8.service.port>9103</fabric8.service.port>
     <fabric8.service.containerPort>${http.port}</fabric8.service.containerPort>
     <docker.env.MAIN>org.apache.camel.spring.Main</docker.env.MAIN>
 

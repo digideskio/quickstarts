@@ -4,12 +4,9 @@ This quick start demonstrates how to create a RESTful (Camel-Netty-Http) web ser
 
 ### From the source code
 
-Follow the instructions from the _Building this example_ section, and after you have built the source code run the following command:
+1. Run `mvn install`
+2. Run `mvn camel:run` to run the example as a standalone Spring based Camel application.
 
-1. Run `mvn camel:run` to run the example as a standalone Spring based Camel application.
-
-Running outside fabric means that you do not have the fabric web console or fabric server to manage the application.
-You may want to use `mvn camel:run` during development and to quickly try your code changes.
 
 ### todo polish docs
 Once it's running you can test with CURL or your browser
