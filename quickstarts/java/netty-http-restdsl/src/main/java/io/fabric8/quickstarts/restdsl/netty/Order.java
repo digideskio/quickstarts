@@ -30,32 +30,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The Order class is not only a plain old java object, with a few properties and getters and setters, but it also defines
- * a sub-resource for the Order returned by CustomerService.
- * <p/>
- * By adding the @XmlRootElement annotation, we make it possible for JAXB to unmarshal this object into a XML document and
- * to marshal it back from the same XML document.
- * <p/>
- * The XML representation of an Order will look like this:
- * <Order>
- * <id>223</id>
- * <description>Order 223</description>
- * </Order>
+ * POJO representing an order.
  */
-@XmlRootElement(name = "Order")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Order {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CustomerService.class);
-
-    @XmlAttribute
     private long id;
-    @XmlAttribute
     private long customerId;
-    @XmlAttribute
     private String description;
-    @XmlAttribute
-    private Map<Long, Product> products = new HashMap<Long, Product>();
+    private Map<Long, Product> products = new HashMap();
 
 
     public long getCustomerId() {
