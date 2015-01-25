@@ -65,7 +65,7 @@ public class NettyFileRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("netty-http:http://0.0.0.0:9003/public?matchOnUriPrefix=true")
+        from("netty-http:http://0.0.0.0:9003/public?matchOnUriPrefix=true&bootstrapConfiguration=#serverBootstrapConfiguration")
             .process(new Processor() {
                 @Override
                 public void process(Exchange exchange) throws Exception {
@@ -74,25 +74,25 @@ public class NettyFileRouteBuilder extends RouteBuilder {
                     MessageEvent event = in.getHeader(NettyConstants.NETTY_MESSAGE_EVENT, MessageEvent.class);
 
                     HttpRequest request = (HttpRequest) event.getMessage();
-                    final Message outMessage = exchange.getOut();
+                    final Message out = exchange.getOut();
                     if (request.getMethod() != GET) {
-                        setErrorResponse(outMessage, METHOD_NOT_ALLOWED);
+                        setErrorResponse(out, METHOD_NOT_ALLOWED);
                         return;
                     }
 
                     final String path = sanitizeUri(request.getUri());
                     if (path == null) {
-                        setErrorResponse(outMessage, FORBIDDEN);
+                        setErrorResponse(out, FORBIDDEN);
                         return;
                     }
 
                     File file = new File(path);
                     if (file.isHidden() || !file.exists()) {
-                        setErrorResponse(outMessage, NOT_FOUND);
+                        setErrorResponse(out, NOT_FOUND);
                         return;
                     }
                     if (!file.isFile()) {
-                        setErrorResponse(outMessage, FORBIDDEN);
+                        setErrorResponse(out, FORBIDDEN);
                         return;
                     }
 
@@ -113,8 +113,8 @@ public class NettyFileRouteBuilder extends RouteBuilder {
                             dateFormatter.setTimeZone(TimeZone.getTimeZone(HTTP_DATE_GMT_TIMEZONE));
 
                             Calendar time = new GregorianCalendar();
-                            outMessage.setHeader(DATE, dateFormatter.format(time.getTime()));
-                            outMessage.setBody(response);
+                            out.setHeader(DATE, dateFormatter.format(time.getTime()));
+                            out.setBody(response);
 
                             return;
                         }
@@ -127,9 +127,9 @@ public class NettyFileRouteBuilder extends RouteBuilder {
                     response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, content.length);
 
                     String mimeType = Files.probeContentType(file.toPath());
-                    outMessage.setHeader(Exchange.CONTENT_TYPE, mimeType);
+                    out.setHeader(Exchange.CONTENT_TYPE, mimeType);
 
-                    outMessage.setBody(response);
+                    out.setBody(response);
                 }
             });
     }

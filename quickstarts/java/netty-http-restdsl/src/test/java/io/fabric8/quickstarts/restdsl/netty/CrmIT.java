@@ -41,7 +41,7 @@ public final class CrmIT {
     public static final String CUSTOMER_TEST_URL = "http://localhost:9003/customers/123";
     public static final String CUSTOMER_ORDERS_TEST_URL = "http://localhost:9003/customers/123/orders/";
     public static final String CUSTOMER_SERVICE_URL = "http://localhost:9003/customers";
-    public static final String INDEX_TEST_URL = "http://localhost:9003/index.html";
+    public static final String INDEX_TEST_URL = "http://localhost:9003/public/index.html";
     private static final Logger LOG = LoggerFactory.getLogger(CrmIT.class);
     private URL url;
     private InputStream in;
