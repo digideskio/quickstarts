@@ -26,6 +26,7 @@
   <!-- a rest service which uses binding to/from customer pojos -->
   <bean id="customerRoutes" class="io.fabric8.quickstarts.restdsl.netty.CustomerRouteBuilder"/>
 
+  <!-- a bean to handle static files -->
   <bean id="nettyFileRoutes" class="io.fabric8.quickstarts.restdsl.netty.NettyFileRouteBuilder"/>
 
   <!-- a bean for customer services -->
@@ -42,9 +43,6 @@
         <property name="port" value="9003"/>
         <property name="connectTimeout" value="20000"/>
         <!--todo tl fix connectionTimeout on Camel wiki -->
-        <property name="workerCount" value="8"/>
+        <property name="workerCount" value="16"/>
     </bean>
-    <bean id="defaultClassResolver" class="org.apache.camel.impl.DefaultClassResolver"/>
-
-
 </beans>
