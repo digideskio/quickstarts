@@ -43,7 +43,9 @@ public class CustomerRouteBuilder extends RouteBuilder{
 
         // configure netty-http as the component for the rest DSL
         // and we enable JSON binding mode for all requests by default, with Customer update overriding to use XML
-        restConfiguration().component("netty-http").endpointProperty("matchOnUriPrefix", "true")
+        restConfiguration().component("netty-http")
+                .endpointProperty("matchOnUriPrefix", "true")
+                .endpointProperty("bootstrapConfiguration", "#serverBootstrapConfiguration")
                 .host("0.0.0.0").port(9003).bindingMode(RestBindingMode.json)
             // and output using pretty print
             .dataFormatProperty("prettyPrint", "true");
