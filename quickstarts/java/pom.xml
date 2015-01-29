@@ -46,7 +46,6 @@
     <module>camel-netty4-http-rest</module>
     <module>camel-netty-http-rest-and-file</module>
     <module>camel-netty4-http-rest-and-file</module>
-    <module>camel-spark-restdsl</module>
     </modules>
 
   <build>
