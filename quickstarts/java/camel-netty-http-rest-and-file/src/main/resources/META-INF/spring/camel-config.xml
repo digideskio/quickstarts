@@ -24,13 +24,13 @@
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
   <!-- a rest service which uses binding to/from customer pojos -->
-  <bean id="customerRoutes" class="io.fabric8.quickstarts.restdsl.netty4.CustomerRouteBuilder"/>
+  <bean id="customerRoutes" class="io.fabric8.quickstarts.restdsl.netty.CustomerRouteBuilder"/>
 
   <!-- a bean to handle static files -->
-  <bean id="nettyFileRoutes" class="io.fabric8.quickstarts.restdsl.netty4.NettyFileRouteBuilder"/>
+  <bean id="nettyFileRoutes" class="io.fabric8.quickstarts.restdsl.netty.NettyFileRouteBuilder"/>
 
   <!-- a bean for customer services -->
-  <bean id="customerService" class="io.fabric8.quickstarts.restdsl.netty4.CustomerService"/>
+  <bean id="customerService" class="io.fabric8.quickstarts.restdsl.netty.CustomerService"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <routeBuilder ref="customerRoutes"/>

@@ -14,7 +14,7 @@
  *  permissions and limitations under the License.
  */
 
-package io.fabric8.quickstarts.restdsl.netty4;
+package io.fabric8.quickstarts.restdsl.netty;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
