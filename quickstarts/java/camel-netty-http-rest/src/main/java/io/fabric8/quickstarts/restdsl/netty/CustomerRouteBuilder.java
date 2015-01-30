@@ -21,7 +21,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 
 /**
- * Customer related routes, to keep it simple there's some orders and product stuff too.
+ * Customer related routes.
  */
 public class CustomerRouteBuilder extends RouteBuilder{
 
@@ -54,10 +54,10 @@ public class CustomerRouteBuilder extends RouteBuilder{
                 to("bean:customerService?method=updateCustomer")
             .post().bindingMode(RestBindingMode.auto).type(Customer.class).outType(Customer.class).
                 to("bean:customerService?method=addCustomer")
-                .get("/{id}").outType(Customer.class).to("bean:customerService?method=getCustomer(${header.id})")
-                .get("/{id}/orders").to("bean:customerService?method=listOrders(${header.id})")
-                .get("/orders/{id}").to("bean:customerService?method=getOrder(${header.id})")
+            .get("/{id}").outType(Customer.class).to("bean:customerService?method=getCustomer(${header.id})")
+            .get("/{id}/orders").to("bean:customerService?method=listOrders(${header.id})")
+            .get("/orders/{id}").to("bean:customerService?method=getOrder(${header.id})")
             .get("/products/{id}").to("bean:customerService?method=getProduct(${header.id})")
-                .post("/{id}/updateorder").type(Order.class).to("bean:customerService?method=updateOrder");
+            .post("/{id}/updateorder").type(Order.class).to("bean:customerService?method=updateOrder");
     }
 }
