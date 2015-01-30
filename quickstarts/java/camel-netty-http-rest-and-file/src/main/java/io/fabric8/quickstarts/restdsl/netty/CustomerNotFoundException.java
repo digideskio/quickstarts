@@ -13,6 +13,10 @@
  *  implied.  See the License for the specific language governing
  *  permissions and limitations under the License.
  */
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://rest.fabric.quickstarts.fabric8.io/", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package io.fabric8.quickstarts.restdsl.netty4;
+package io.fabric8.quickstarts.restdsl.netty;
 
+/**
+ * Thrown when the customer is not found.
+ */
+public class CustomerNotFoundException extends RuntimeException {
+}
