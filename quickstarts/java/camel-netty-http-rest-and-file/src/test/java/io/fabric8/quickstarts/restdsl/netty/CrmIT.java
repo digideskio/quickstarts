@@ -35,6 +35,7 @@ import java.net.URL;
  * The client class has a main method that accesses a few of the resources defined in our NettyHttp example using
  * the Apache Commons HttpClient classes.
  */
+//todo rename test class
 public final class CrmIT {
 
     public static final String CUSTOMER_TEST_URL = "http://localhost:9003/customers/123";
