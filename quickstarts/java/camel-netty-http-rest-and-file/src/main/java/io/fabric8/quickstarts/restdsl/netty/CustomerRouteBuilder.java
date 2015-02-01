@@ -42,7 +42,7 @@ public class CustomerRouteBuilder extends RouteBuilder{
             .setBody().constant("Invalid json data");
 
         // configure netty-http as the component for the rest DSL
-        // and we enable JSON binding mode for all requests by default, with Customer update overriding to use XML
+        // and we enable JSON binding mode for all requests by default, with Customer update overriding to use auto
         restConfiguration().component("netty-http")
                 .endpointProperty("matchOnUriPrefix", "true")
                 .endpointProperty("bootstrapConfiguration", "#serverBootstrapConfiguration")
@@ -56,9 +56,9 @@ public class CustomerRouteBuilder extends RouteBuilder{
             .post().bindingMode(RestBindingMode.auto).type(Customer.class).outType(Customer.class).
                 to("bean:customerService?method=addCustomer")
             .get("/{id}").outType(Customer.class).to("bean:customerService?method=getCustomer(${header.id})")
+            .delete("/{id}").outType(Customer.class).to("bean:customerService?method=deleteCustomer(${header.id})")
             .get("/{id}/orders").to("bean:customerService?method=listOrders(${header.id})")
             .get("/orders/{id}").to("bean:customerService?method=getOrder(${header.id})")
-            .get("/products/{id}").to("bean:customerService?method=getProduct(${header.id})")
-            .post("/{id}/updateorder").type(Order.class).to("bean:customerService?method=updateOrder");
+            .get("/products/{id}").to("bean:customerService?method=getProduct(${header.id})");
     }
 }
