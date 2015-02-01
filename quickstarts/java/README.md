@@ -9,4 +9,5 @@ The following quickstarts is provided out of the box:
 endpoints and beans.
 * [camel.spring](camel-spring) - demonstrates how to run a Spring based Camel application as a standalone Java container. The Camel route is defined in Spring XML file.
 * [cxf.cdi](cxf-cdi) - this example shows how to work with CXF in the Java Container using CDI to configure CXF REST services.
- 
+* [camel.netty4.http.rest](camel-netty4-http-rest) - this example shows how to work with Netty4 HTTP RESTful services defined with Camel RestDSL in a standalone Java container.
+

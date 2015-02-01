@@ -59,12 +59,10 @@ public final class CrmIT {
     }
 
     /**
-     * HTTP GET http://localhost:8181/cxf/crm/customerservice/customers/123
-     * returns the XML document representing customer 123
+     * HTTP GET http://localhost:9003/customers/123 returns the JSON document representing customer 123
      * <p/>
      * On the server side, it matches the CustomerService's getCustomer() method
      *
-     * @throws Exception
      */
     @Test
     public void getCustomerTest() throws Exception {
@@ -75,8 +73,8 @@ public final class CrmIT {
             in = url.openStream();
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_TEST_URL);
-            LOG.error("You should build the 'rest' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'rest' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         }
         String res = getStringFromInputStream(in);
@@ -85,12 +83,8 @@ public final class CrmIT {
     }
 
     /**
-     * HTTP GET http://localhost:8181/cxf/crm/customerservice/orders/223/products/323
-     * returns the XML document representing product 323 in order 223
-     * <p/>
-     * On the server side, it matches the Order's getProduct() method
-     *
-     * @throws Exception
+     * HTTP GET http://localhost:9003/customers/123/orders
+     * returns the JSON document representing the orders for customer 123
      */
     @Test
     public void getProductOrderTest() throws Exception {
@@ -101,8 +95,8 @@ public final class CrmIT {
             in = url.openStream();
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_ORDERS_TEST_URL);
-            LOG.error("You should build the 'rest' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'rest' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         }
 
@@ -112,7 +106,7 @@ public final class CrmIT {
     }
 
     /**
-     * HTTP POST http://localhost:8181/cxf/crm/customerservice/customers is used to upload the contents of
+     * HTTP POST http://localhost:9003/customers is used to upload the contents of
      * the add_customer.json file to add a new customer to the system.
      * <p/>
      * On the server side, it matches the CustomerService's addCustomer() method
@@ -139,8 +133,8 @@ public final class CrmIT {
             LOG.info(res);
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'rest' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'rest' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         } finally {
             // Release current connection to the connection pool once you are
@@ -153,7 +147,7 @@ public final class CrmIT {
 
 
     /**
-     * HTTP POST http://localhost:8181/cxf/crm/customerservice/customers is used to upload the contents of
+     * HTTP POST http://localhost:9003/customers is used to upload the contents of
      * the add_customer.xml file to add a new customer to the system.
      * <p/>
      * On the server side, it matches the CustomerService's addCustomer() method
@@ -180,8 +174,8 @@ public final class CrmIT {
             LOG.info(res);
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'rest' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'rest' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         } finally {
             // Release current connection to the connection pool once you are
@@ -193,7 +187,7 @@ public final class CrmIT {
     }
 
     /**
-     * HTTP PUT http://localhost:8181/cxf/crm/customerservice/customers is used to upload the contents of
+     * HTTP PUT http://localhost:9003/customers is used to upload the contents of
      * the update_customer.xml file to update the customer information for customer 123.
      * <p/>
      * On the server side, it matches the CustomerService's updateCustomer() method
@@ -203,7 +197,6 @@ public final class CrmIT {
     @Test
     public void putCustomerTest() throws IOException {
 
-
         LOG.info("Sent HTTP PUT request to update customer info");
 
         String inputFile = this.getClass().getResource("/update_customer.xml").getFile();
@@ -220,8 +213,8 @@ public final class CrmIT {
             LOG.info(put.getResponseBodyAsString());
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'rest' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'rest' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         } finally {
             // Release current connection to the connection pool once you are
@@ -229,49 +222,6 @@ public final class CrmIT {
             put.releaseConnection();
         }
 
-        Assert.assertEquals(200, result);
+        Assert.assertEquals(result, 200);
     }
-
-
-    /**
-     * HTTP PUT http://localhost:8181/cxf/crm/customerservice/customers is used to upload the contents of
-     * the update_customer.xml file to update the customer information for customer 123.
-     * <p/>
-     * On the server side, it matches the CustomerService's updateCustomer() method
-     *
-     * @throws Exception
-     */
-    @Test
-    public void putCustomerNotFoundTest() throws IOException {
-
-
-        LOG.info("Sent HTTP PUT request to update customer info");
-
-        String inputFile = this.getClass().getResource("/update_customer.xml").getFile();
-        File input = new File(inputFile);
-        PutMethod put = new PutMethod(CUSTOMER_SERVICE_URL);
-        RequestEntity entity = new FileRequestEntity(input, "application/xml; charset=ISO-8859-1");
-        put.setRequestEntity(entity);
-        HttpClient httpclient = new HttpClient();
-        int result = 0;
-        try {
-            result = httpclient.executeMethod(put);
-            LOG.info("Response status code: " + result);
-            LOG.info("Response body: ");
-            LOG.info(put.getResponseBodyAsString());
-        } catch (IOException e) {
-            LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'rest' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'rest' quick start root");
-            Assert.fail("Connection error");
-        } finally {
-            // Release current connection to the connection pool once you are
-            // done
-            put.releaseConnection();
-        }
-
-        Assert.assertEquals(200, result);
-    }
-
-
 }

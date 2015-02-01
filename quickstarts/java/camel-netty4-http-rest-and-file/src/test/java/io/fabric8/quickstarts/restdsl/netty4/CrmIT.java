@@ -13,7 +13,7 @@
  *  implied.  See the License for the specific language governing
  *  permissions and limitations under the License.
  */
-package io.fabric8.quickstarts.restdsl.netty;
+package io.fabric8.quickstarts.restdsl.netty4;
 
 import junit.framework.Assert;
 import org.apache.commons.httpclient.HttpClient;
@@ -21,6 +21,7 @@ import org.apache.commons.httpclient.methods.FileRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +39,9 @@ import java.net.URL;
 public final class CrmIT {
 
     public static final String CUSTOMER_TEST_URL = "http://localhost:9003/customers/123";
-    public static final String CUSTOMER_ORDERS_TEST_URL = "http://localhost:9003/customers/123/orders/";
+    public static final String CUSTOMER_ORDERS_TEST_URL = "http://localhost:9003/customers/123/orders";
     public static final String CUSTOMER_SERVICE_URL = "http://localhost:9003/customers";
+    public static final String INDEX_TEST_URL = "http://localhost:9003/public/index.html";
     private static final Logger LOG = LoggerFactory.getLogger(CrmIT.class);
     private URL url;
     private InputStream in;
@@ -73,13 +75,35 @@ public final class CrmIT {
             in = url.openStream();
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_TEST_URL);
-            LOG.error("You should build the 'camel-netty-http' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'camel-netty-http' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         }
         String res = getStringFromInputStream(in);
         LOG.info(res);
         Assert.assertTrue(res.contains("123"));
+    }
+
+    /**
+     * HTTP GET http://localhost:9003/public/index.html
+     * returns the index page.
+     */
+    @Test
+    public void getIndexTest() throws Exception {
+        LOG.info("Sent HTTP GET request to get the index.html page");
+        url = new URL(INDEX_TEST_URL);
+        InputStream in = null;
+        try {
+            in = url.openStream();
+        } catch (IOException e) {
+            LOG.error("Error connecting to {}", INDEX_TEST_URL);
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
+            Assert.fail("Connection error");
+        }
+        String res = getStringFromInputStream(in);
+        LOG.info(res);
+        Assert.assertTrue(res.contains("Camel Netty HTTP Example"));
     }
 
     /**
@@ -95,8 +119,8 @@ public final class CrmIT {
             in = url.openStream();
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_ORDERS_TEST_URL);
-            LOG.error("You should build the 'camel-netty-http' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'camel-netty-http' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         }
 
@@ -133,8 +157,8 @@ public final class CrmIT {
             LOG.info(res);
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'camel-netty-http' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'camel-netty-http' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         } finally {
             // Release current connection to the connection pool once you are
@@ -174,8 +198,8 @@ public final class CrmIT {
             LOG.info(res);
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'camel-netty-http' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'camel-netty-http' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         } finally {
             // Release current connection to the connection pool once you are
@@ -213,8 +237,8 @@ public final class CrmIT {
             LOG.info(put.getResponseBodyAsString());
         } catch (IOException e) {
             LOG.error("Error connecting to {}", CUSTOMER_SERVICE_URL);
-            LOG.error("You should build the 'camel-netty-http' quick start and deploy it to a local Fabric8 before running this test");
-            LOG.error("Please read the README.md file in 'camel-netty-http' quick start root");
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
             Assert.fail("Connection error");
         } finally {
             // Release current connection to the connection pool once you are
@@ -224,5 +248,4 @@ public final class CrmIT {
 
         Assert.assertEquals(result, 200);
     }
-
 }
