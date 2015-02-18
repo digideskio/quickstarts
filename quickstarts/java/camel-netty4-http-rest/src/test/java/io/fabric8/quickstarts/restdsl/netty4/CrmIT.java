@@ -21,6 +21,7 @@ import org.apache.commons.httpclient.methods.FileRequestEntity;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.RequestEntity;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +39,9 @@ import java.net.URL;
 public final class CrmIT {
 
     public static final String CUSTOMER_TEST_URL = "http://localhost:9003/customers/123";
-    public static final String CUSTOMER_ORDERS_TEST_URL = "http://localhost:9003/customers/123/orders/";
+    public static final String CUSTOMER_ORDERS_TEST_URL = "http://localhost:9003/customers/123/orders";
     public static final String CUSTOMER_SERVICE_URL = "http://localhost:9003/customers";
+    public static final String INDEX_TEST_URL = "http://localhost:9003/public/index.html";
     private static final Logger LOG = LoggerFactory.getLogger(CrmIT.class);
     private URL url;
     private InputStream in;
@@ -80,6 +82,28 @@ public final class CrmIT {
         String res = getStringFromInputStream(in);
         LOG.info(res);
         Assert.assertTrue(res.contains("123"));
+    }
+
+    /**
+     * HTTP GET http://localhost:9003/public/index.html
+     * returns the index page.
+     */
+    @Test
+    public void getIndexTest() throws Exception {
+        LOG.info("Sent HTTP GET request to get the index.html page");
+        url = new URL(INDEX_TEST_URL);
+        InputStream in = null;
+        try {
+            in = url.openStream();
+        } catch (IOException e) {
+            LOG.error("Error connecting to {}", INDEX_TEST_URL);
+            LOG.error("You should build the 'camel-netty4-http' quick start and deploy it to a local Fabric8 before running this test");
+            LOG.error("Please read the README.md file in 'camel-netty4-http' quick start root");
+            Assert.fail("Connection error");
+        }
+        String res = getStringFromInputStream(in);
+        LOG.info(res);
+        Assert.assertTrue(res.contains("Camel Netty HTTP Example"));
     }
 
     /**

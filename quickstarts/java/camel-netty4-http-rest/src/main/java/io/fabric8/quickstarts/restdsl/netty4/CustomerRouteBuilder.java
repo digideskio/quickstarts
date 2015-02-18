@@ -1,5 +1,5 @@
 /**
- *  Copyright 2005-2014 Red Hat, Inc.
+ *  Copyright 10005-10014 Red Hat, Inc.
  *
  *  Red Hat licenses this file to you under the Apache License, version
  *  2.0 (the "License"); you may not use this file except in compliance
@@ -23,17 +23,17 @@ import org.apache.camel.model.rest.RestBindingMode;
 /**
  * Customer related routes.
  */
-public class CustomerRouteBuilder extends RouteBuilder {
+public class CustomerRouteBuilder extends RouteBuilder{
 
     @Override
     public void configure() throws Exception {
 
-        // Handle CustomerNotFoundException to return a 404
+        // Handle CustomerNotFoundException to return 404
         onException(CustomerNotFoundException.class)
-        .handled(true)
-        .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
-        .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
-        .setBody().constant("Customer not found");
+            .handled(true)
+            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
+            .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
+            .setBody().constant("Customer not found");
 
         onException(JsonParseException.class)
             .handled(true)
@@ -41,21 +41,24 @@ public class CustomerRouteBuilder extends RouteBuilder {
             .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
             .setBody().constant("Invalid json data");
 
-        // configure netty-http as the component for the rest DSL
-        // and we enable JSON binding mode for all requests by default, with Customer update overriding to use auto
+        // configure netty4-http as the component for the rest DSL
+        // and we enable JSON binding mode for all requests by default, with Customer add/update overriding to use auto
         restConfiguration().component("netty4-http")
-                .endpointProperty("matchOnUriPrefix", "true")
-                .host("localhost").port(9003).bindingMode(RestBindingMode.json)
+            .endpointProperty("matchOnUriPrefix", "true")
+            .endpointProperty("bootstrapConfiguration", "#serverBootstrapConfiguration")
+            .host("localhost").port(9003).bindingMode(RestBindingMode.json)
             // and output using pretty print
             .dataFormatProperty("prettyPrint", "true");
 
-        rest("/customers").get().outTypeList(Customer.class).to("bean:customerService?method=listCustomers")
-            .put().bindingMode(RestBindingMode.auto).type(Customer.class).outType(Customer.class).
-                to("bean:customerService?method=updateCustomer")
-            .post().bindingMode(RestBindingMode.auto).type(Customer.class).outType(Customer.class).
-                to("bean:customerService?method=addCustomer")
+        // Define the verbs' types and binding and map them to customer services
+        rest("/customers").get().outTypeList(Customer.class)
+                .to("bean:customerService?method=listCustomers")
+            .put().bindingMode(RestBindingMode.auto).type(Customer.class).outType(Customer.class)
+                .to("bean:customerService?method=updateCustomer")
+            .post().bindingMode(RestBindingMode.auto).type(Customer.class).outType(Customer.class)
+                .to("bean:customerService?method=addCustomer")
             .get("/{id}").outType(Customer.class).to("bean:customerService?method=getCustomer(${header.id})")
-            .delete("/{id}").outType(Customer.class).to("bean:customerService?method=deleteCustomer(${header.id})")
+                .delete("/{id}").outType(Customer.class).to("bean:customerService?method=deleteCustomer(${header.id})")
             .get("/{id}/orders").to("bean:customerService?method=listOrders(${header.id})")
             .get("/orders/{id}").to("bean:customerService?method=getOrder(${header.id})")
             .get("/products/{id}").to("bean:customerService?method=getProduct(${header.id})");

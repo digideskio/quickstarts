@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>camel-netty4-http-rest</artifactId>
+    <artifactId>camel-netty4-http-rest-and-file</artifactId>
   <packaging>jar</packaging>
 
-  <name>Quickstart : Camel Netty4 Http Rest</name>
-  <description>Camel Netty4 HTTP route using Spring XML in a standalone Java container</description>
+  <name>Quickstart : Camel Netty4 Http Rest DSL and static File handling</name>
+  <description>Camel Netty4 HTTP route using Spring XML in a standalone Java container to provide RESTful services and serve static files.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,11 +36,11 @@
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
     <docker.port.container.jolokia>8778</docker.port.container.jolokia>
     <docker.port.container.http>8080</docker.port.container.http>
-    <fabric8.kubernetes.name>quickStartJavaCamelNetty4Http</fabric8.kubernetes.name>
-    <fabric8.service.name>quickstart-java-camel-netty4-http</fabric8.service.name>
+    <fabric8.kubernetes.name>quickStartJavaCamelNettyHttp</fabric8.kubernetes.name>
+    <fabric8.service.name>quickstart-java-camel-netty4-http-rest-and-file</fabric8.service.name>
     <!--todo what should these ports be?-->
-    <fabric8.service.port>9104</fabric8.service.port>
-    <fabric8.service.containerPort>8080</fabric8.service.containerPort>
+    <!--<fabric8.service.port>9104</fabric8.service.port>-->
+    <!--<fabric8.service.containerPort>8080</fabric8.service.containerPort>-->
     <docker.env.MAIN>org.apache.camel.spring.Main</docker.env.MAIN>
 
     <fabric8.label.container>java</fabric8.label.container>
@@ -79,12 +79,12 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-spring</artifactId>
     </dependency>
+      <!-- todo camel-netty4-http should be in fabric8 bom -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-netty4-http</artifactId>
-      <version>${camel.version}</version> <!-- todo should be in bom? -->
+      <version>${camel.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test-spring</artifactId>

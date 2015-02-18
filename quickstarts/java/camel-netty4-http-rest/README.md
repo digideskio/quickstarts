@@ -25,6 +25,9 @@ And then store this information in the local Maven settings file. You can find m
 
 ## Access services using a web browser
 
+There's an index page you can use to try some of the services defined.
+http://localhost:9003/public/index.html
+
 Use this URL to display the JSON representation for customer 123:
 
     http://localhost:9003/customers/123
