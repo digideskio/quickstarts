@@ -47,6 +47,7 @@
     <camelContext xmlns="http://camel.apache.org/schema/blueprint" xmlns:order="http://fabric8.com/examples/order/v7"
         id="eip-example-context">
 
+
         <!--
           This is the main Camel route.  In Camel, you can split up routes into more manageable bits and pieces and
           using a direct: endpoint to link those routes together again.
@@ -126,7 +127,11 @@
             </filter>
         </route>
 
-
     </camelContext>
+
+
+    <bean id="metricsRoutePolicyFactory"
+          class="org.apache.camel.component.metrics.
+                 routepolicy.MetricsRoutePolicyFactory"/>
 
 </blueprint>

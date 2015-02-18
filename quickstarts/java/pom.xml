@@ -42,11 +42,8 @@
     <module>cxf-cdi</module>
     <module>simple-mainclass</module>
     <module>simple-fatjar</module>
-    <module>camel-netty-http-rest</module>
     <module>camel-netty4-http-rest</module>
-    <module>camel-netty-http-rest-and-file</module>
-    <module>camel-netty4-http-rest-and-file</module>
-    </modules>
+  </modules>
 
   <build>
     <defaultGoal>install</defaultGoal>
