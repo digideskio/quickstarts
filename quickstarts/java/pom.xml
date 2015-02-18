@@ -42,7 +42,7 @@
     <module>cxf-cdi</module>
     <module>simple-mainclass</module>
     <module>simple-fatjar</module>
-    <module>netty-http-restdsl</module>
+    <module>camel-netty4-http-rest</module>
 <!--
     TODO
     <module>jgroups-greeter</module>
